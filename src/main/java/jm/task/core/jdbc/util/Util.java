@@ -8,11 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Util {
-    // подключаем нашу БД (тут самое лёгкое "почти")
-    // реализуйте настройку соеденения с БД
 
     private static final Logger logger = Logger.getLogger(Util.class.getName());
-    private static final String URL = "jdbc:mysql://localhost:3306/1_1_4_java pre-project";
+    private static final String URL = "jdbc:mysql://localhost:3306/1_1_4_pp";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root11";
 

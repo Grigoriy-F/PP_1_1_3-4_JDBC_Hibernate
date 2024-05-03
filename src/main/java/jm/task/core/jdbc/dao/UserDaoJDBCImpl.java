@@ -23,12 +23,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 + "age TINYINT"
                 + ")";
 
-// Для взаимодействия с базой данных приложение отправляет серверу MySQL команды на языке SQL.
-// Чтобы выполнить команду, вначале необходимо создаеть объект Statement.
-//Для его создания у объекта Connection вызывается метод createStatement():
         try (Statement statement = connection.createStatement()) {
-// execute(): выполняет любые команды и возвращает значение boolean: true - если команда возвращает набор строк (SELECT),
-// иначе возвращается false.
             // создание таблицы
             statement.execute(createTableSQL);
             logger.info("Таблица пользователей создана успешно");
@@ -43,7 +38,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             statement.execute(createTableSQL);
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Неудалось удалить таблицу \n", e);
+            logger.log(Level.SEVERE, "Неудалось удалить таблицу 2 \n", e);
         }
     }
 
@@ -79,14 +74,12 @@ public class UserDaoJDBCImpl implements UserDao {
         String selectSQL = "SELECT * FROM User";
 
         try(Statement statement = connection.createStatement()) {
-            // это модель ответа нашего запроса (т.е колонка и значение)
             ResultSet resultSet =  statement.executeQuery(selectSQL);
 
+            while (resultSet.next()){
+                User user = new User();
 
-            while (resultSet.next()){ // ходим по строкам
-                User user = new User(); // создаем юзера
-
-                user.setId(resultSet.getLong("id")); // обращаемся по имени колонки
+                user.setId(resultSet.getLong("id"));
                 user.setAge(resultSet.getByte("age"));
                 user.setName(resultSet.getString("name"));
                 user.setLastName(resultSet.getString("lastname"));
@@ -99,8 +92,6 @@ public class UserDaoJDBCImpl implements UserDao {
         return users;
     }
 
-    // TRUNCATE TABLE используется для очищения всех записей из таблицы в MySQL. Он выполняет ту же функцию,
-    // что и оператор DELETE, без предложения WHERE.
     public void cleanUsersTable() {
         String truncateSQL = "TRUNCATE TABLE User";
 

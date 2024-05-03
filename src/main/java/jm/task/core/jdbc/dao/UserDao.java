@@ -1,7 +1,5 @@
 package jm.task.core.jdbc.dao;
 
-// Data Access Object (DAO) — это класс, содержащий CRUD методы для конкретной модели
-
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;

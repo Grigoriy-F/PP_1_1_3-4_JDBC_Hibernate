@@ -1,6 +1,5 @@
 package jm.task.core.jdbc.service;
 
-//  внутри класса создаём экземпляр UserDaoJDBCImpl (дальше сообразите что делать, идея поможет)))
 
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;

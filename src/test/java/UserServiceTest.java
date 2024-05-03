@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-// в самом конце, запускаем класс UserServiceTest для проверки, если при запуске все галочки зелёные -> УРА можно идти дальше.
-
 public class UserServiceTest {
     private final UserService userService = new UserServiceImpl();
 
@@ -20,7 +18,6 @@ public class UserServiceTest {
     public void dropUsersTable() {
         try {
             userService.dropUsersTable();
-            userService.dropUsersTable();
         } catch (Exception e) {
             Assert.fail("При тестировании удаления таблицы произошло исключение\n" + e);
         }
@@ -29,19 +26,15 @@ public class UserServiceTest {
     @Test
     public void createUsersTable() {
         try {
-            userService.dropUsersTable();
             userService.createUsersTable();
         } catch (Exception e) {
             Assert.fail("При тестировании создания таблицы пользователей произошло исключение\n" + e.getMessage());
         }
     }
 
-
-
     @Test
     public void saveUser() {
         try {
-            userService.dropUsersTable();
             userService.createUsersTable();
             userService.saveUser(testName, testLastName, testAge);
 
@@ -62,7 +55,6 @@ public class UserServiceTest {
     @Test
     public void removeUserById() {
         try {
-            userService.dropUsersTable();
             userService.createUsersTable();
             userService.saveUser(testName, testLastName, testAge);
             userService.removeUserById(1L);
@@ -90,7 +82,7 @@ public class UserServiceTest {
     @Test
     public void cleanUsersTable() {
         try {
-            userService.dropUsersTable();
+
             userService.createUsersTable();
             userService.saveUser(testName, testLastName, testAge);
             userService.cleanUsersTable();
