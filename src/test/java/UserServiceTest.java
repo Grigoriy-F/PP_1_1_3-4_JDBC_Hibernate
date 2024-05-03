@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.List;
 
+// в самом конце, запускаем класс UserServiceTest для проверки, если при запуске все галочки зелёные -> УРА можно идти дальше.
+
 public class UserServiceTest {
     private final UserService userService = new UserServiceImpl();
 
@@ -33,6 +35,8 @@ public class UserServiceTest {
             Assert.fail("При тестировании создания таблицы пользователей произошло исключение\n" + e.getMessage());
         }
     }
+
+
 
     @Test
     public void saveUser() {
