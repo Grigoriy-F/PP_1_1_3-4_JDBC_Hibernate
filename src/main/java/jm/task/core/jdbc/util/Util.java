@@ -1,7 +1,6 @@
 package jm.task.core.jdbc.util;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -23,7 +22,7 @@ public class Util {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
-           logger.log(Level.SEVERE, "При подключении к базе данных произошла ошибка", e);
+            logger.log(Level.SEVERE, "При подключении к базе данных произошла ошибка", e);
         }
         return connection;
     }

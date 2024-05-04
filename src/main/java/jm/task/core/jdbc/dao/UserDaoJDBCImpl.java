@@ -14,6 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
     private static final Logger logger = Logger.getLogger(UserDaoJDBCImpl.class.getName());
 
 
+    @Override
     public void createUsersTable() {
         // команда создания таблицы
         String createTableSQL = "CREATE TABLE IF NOT EXISTS User ("
@@ -32,6 +33,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void dropUsersTable() {
         String createTableSQL = "DROP TABLE User";
 
@@ -42,6 +44,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) {
         String insertSQL = "INSERT INTO User (name, lastName, age) VALUES (?, ?, ?)";
 
@@ -56,6 +59,7 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public void removeUserById(long id) {
         String deleteSQL = "DELETE FROM User WHERE id = ?";
 
@@ -68,22 +72,21 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         // получаем все поля с таблицы USER
         String selectSQL = "SELECT * FROM User";
 
-        try(Statement statement = connection.createStatement()) {
-            ResultSet resultSet =  statement.executeQuery(selectSQL);
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(selectSQL);
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 User user = new User();
-
                 user.setId(resultSet.getLong("id"));
                 user.setAge(resultSet.getByte("age"));
                 user.setName(resultSet.getString("name"));
                 user.setLastName(resultSet.getString("lastname"));
-
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -92,6 +95,7 @@ public class UserDaoJDBCImpl implements UserDao {
         return users;
     }
 
+    @Override
     public void cleanUsersTable() {
         String truncateSQL = "TRUNCATE TABLE User";
 
