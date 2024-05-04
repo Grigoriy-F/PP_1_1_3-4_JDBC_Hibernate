@@ -33,14 +33,40 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
+    // проверка на существование таблицы перед вызовом метода dropUsersTable()
+    public boolean isUsersTableExists() {
+        try {
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet resultSet = metaData.getTables(null, null, "User", null);
+            return resultSet.next();
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Ошибка при проверке существования таблицы", e);
+            return false;
+        }
+    }
+
+//    @Override
+//    public void dropUsersTable() {
+//        String createTableSQL = "DROP TABLE User";
+//
+//        try (Statement statement = connection.createStatement()) {
+//            statement.execute(createTableSQL);
+//        } catch (SQLException e) {
+//            logger.log(Level.SEVERE, "Неудалось удалить таблицу 2 \n", e);
+//        }
+//    }
+
     @Override
     public void dropUsersTable() {
-        String createTableSQL = "DROP TABLE User";
-
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(createTableSQL);
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Неудалось удалить таблицу 2 \n", e);
+        if (isUsersTableExists()) {
+            String createTableSQL = "DROP TABLE User";
+            try (Statement statement = connection.createStatement()) {
+                statement.execute(createTableSQL);
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "Неудалось удалить таблицу", e);
+            }
+        } else {
+            logger.info("Таблица пользователей не существует");
         }
     }
 

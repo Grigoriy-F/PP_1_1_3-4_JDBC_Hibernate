@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Util {
+    // по хорошему стоило определить метод закрытия для Connection в Util, так как ты используешь одно на приложение
 
     private static final Logger logger = Logger.getLogger(Util.class.getName());
     private static final String URL = "jdbc:mysql://localhost:3306/1_1_4_pp";
@@ -25,5 +26,16 @@ public class Util {
             logger.log(Level.SEVERE, "При подключении к базе данных произошла ошибка", e);
         }
         return connection;
+    }
+
+    public static void closeConnection(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+                logger.info("Соединение с базой данных закрыто");
+            } catch (SQLException e) {
+                logger.log(Level.SEVERE, "При закрытии соединения произошла ошибка", e);
+            }
+        }
     }
 }

@@ -1,3 +1,5 @@
+import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
@@ -7,7 +9,10 @@ import org.junit.Test;
 import java.util.List;
 
 public class UserServiceTest {
-    private final UserService userService = new UserServiceImpl();
+    // было private final UserService userService = new UserServiceImpl();
+    private final UserDao userDao = new UserDaoJDBCImpl(); // Инициализация UserDao
+    private final UserService userService = new UserServiceImpl(userDao); // Передача UserDao в конструктор UserServiceImpl
+
 
     private final String testName = "Ivan";
     private final String testLastName = "Ivanov";
@@ -94,5 +99,4 @@ public class UserServiceTest {
             Assert.fail("При тестировании очистки таблицы пользователей произошло исключение\n" + e);
         }
     }
-
 }
