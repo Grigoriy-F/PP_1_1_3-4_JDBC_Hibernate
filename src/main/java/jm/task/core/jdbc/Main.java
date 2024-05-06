@@ -1,32 +1,23 @@
 package jm.task.core.jdbc;
 
-import jm.task.core.jdbc.dao.UserDao;
-import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.service.UserService;
 import jm.task.core.jdbc.service.UserServiceImpl;
-import jm.task.core.jdbc.util.Util;
-
-import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) {
-        UserDao userDao = new UserDaoJDBCImpl(); // Создание объекта UserDao
-        UserService userService = new UserServiceImpl(userDao); // Передача UserDao в конструктор UserServiceImpl
 
-        try {
-            userService.createUsersTable();
+        UserService userService = new UserServiceImpl();
 
-            userService.saveUser("Grigoriy", "Fedorov", (byte) 28);
-            userService.saveUser("Джеймс", "Гослинг", (byte) 69);
-            userService.saveUser("Павел", "Дуров", (byte) 39);
-            userService.saveUser("Илон", "Маск", (byte) 52);
 
-            System.out.println(userService.getAllUsers());
-            userService.getAllUsers();
-            userService.dropUsersTable();
-        } finally {
-            Connection connection = Util.getConnection();
-            Util.closeConnection(connection);
-        }
+        userService.createUsersTable();
+
+        userService.saveUser("Grigoriy", "Fedorov", (byte) 28);
+        userService.saveUser("Джеймс", "Гослинг", (byte) 69);
+        userService.saveUser("Павел", "Дуров", (byte) 39);
+        userService.saveUser("Илон", "Маск", (byte) 52);
+
+        userService.getAllUsers();
+        userService.cleanUsersTable();
+        userService.dropUsersTable();
     }
 }

@@ -1,9 +1,7 @@
 package jm.task.core.jdbc.service;
 
-// поправь инкапсуляцию в классе UserServiceImpl. В качестве типа данных для поля класса - абстракция(интерфейс),
-// позволяет не зависеть от конкретной реализации и легко её заменить
-
 import jm.task.core.jdbc.dao.UserDao;
+import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
 import jm.task.core.jdbc.model.User;
 
 import java.util.List;
@@ -13,12 +11,8 @@ import static java.util.logging.Logger.getLogger;
 import java.util.logging.Logger;
 
 public class UserServiceImpl implements UserService {
-    // было  UserDaoJDBCImpl dao = new UserDaoJDBCImpl();
-    private final UserDao dao; // Теперь поле dao типа UserDao
+    private final UserDao dao = new UserDaoJDBCImpl();
 
-    public UserServiceImpl(UserDao dao) {
-        this.dao = dao;
-    }
 
     @Override
     public void createUsersTable() {

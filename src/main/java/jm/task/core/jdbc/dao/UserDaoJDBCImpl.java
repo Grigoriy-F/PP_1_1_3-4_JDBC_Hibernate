@@ -33,40 +33,15 @@ public class UserDaoJDBCImpl implements UserDao {
         }
     }
 
-    // проверка на существование таблицы перед вызовом метода dropUsersTable()
-    public boolean isUsersTableExists() {
-        try {
-            DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet resultSet = metaData.getTables(null, null, "User", null);
-            return resultSet.next();
-        } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Ошибка при проверке существования таблицы", e);
-            return false;
-        }
-    }
-
-//    @Override
-//    public void dropUsersTable() {
-//        String createTableSQL = "DROP TABLE User";
-//
-//        try (Statement statement = connection.createStatement()) {
-//            statement.execute(createTableSQL);
-//        } catch (SQLException e) {
-//            logger.log(Level.SEVERE, "Неудалось удалить таблицу 2 \n", e);
-//        }
-//    }
 
     @Override
     public void dropUsersTable() {
-        if (isUsersTableExists()) {
-            String createTableSQL = "DROP TABLE User";
-            try (Statement statement = connection.createStatement()) {
-                statement.execute(createTableSQL);
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, "Неудалось удалить таблицу", e);
-            }
-        } else {
-            logger.info("Таблица пользователей не существует");
+        String createTableSQL = "DROP TABLE IF EXISTS USER";
+
+        try (Statement statement = connection.createStatement()) {
+            statement.execute(createTableSQL);
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Неудалось удалить таблицу 2 \n", e);
         }
     }
 
@@ -79,6 +54,7 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, age);
             preparedStatement.executeUpdate();
+            System.out.println("User с именем " + name + " добавлен в базу данных");
         } catch (SQLException e) {
             String message = String.format("User с именем — %s не добавлен в базу данных", name);
             logger.log(Level.SEVERE, message, e);
